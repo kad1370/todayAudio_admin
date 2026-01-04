@@ -8,11 +8,35 @@
 </head>
 <body>
 <h1>📈 오늘의 성공자 오디오</h1>
+<div>
+    <input name="title" placeholder="제목"></input>
+    <input name="desc" placeholder="내용"></input>
+    <input name="file" placeholder="파일"></input>
+    <buttion id="regist" onclick="regist()">등록하기</buttion>
+</div>
 <div id="list"></div>
 <script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./service-worker.js');
-  }
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./service-worker.js');
+    }
+    const ADMIN_TOKEN = 'ba10cc7b9ba5b27317d546824a01203d89c0ea3e0972fab50cb786ab5a702dff';
+
+    function regist(){
+        let data = {
+            title : document.getElementsByName("title")[0].value,
+            desc : document.getElementsByName("desc")[0].value,
+            regDate : new Date().toLocaleString()
+        }
+
+        fetch('https://todayaudio.writer1370.workers.dev/api/upload', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${ADMIN_TOKEN}`
+          },
+          body: JSON.stringify(data)
+        });
+    }
 </script>
 <script src="app.js"></script>
 </body>
