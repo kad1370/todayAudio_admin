@@ -24,18 +24,28 @@
         navigator.serviceWorker.register('./service-worker.js');
     }
     const ADMIN_TOKEN = 'ba10cc7b9ba5b27317d546824a01203d89c0ea3e0972fab50cb786ab5a702dff';
-    const now = new Date();
 
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const day = String(now.getDate()).padStart(2, '0');
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const seconds = String(now.getSeconds()).padStart(2, '0');
+    const response = await fetch('https://todayaudio.writer1370.workers.dev/api/list', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${ADMIN_TOKEN}`
+      }
+    });
 
-    const yyyymmddhhmmss = `${year}${month}${day}${hours}${minutes}${seconds}`;
+    console.info(response);
 
     function regist(){
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+
+        const yyyymmddhhmmss = `${year}${month}${day}${hours}${minutes}${seconds}`;
+
         let data = {
             id : yyyymmddhhmmss,
             title : document.getElementsByName("title")[0].value,
