@@ -39,8 +39,7 @@
 
         const list = document.getElementById('list');
 
-        for(let data of audioList) {
-          let audioData = JSON.parse(data);
+        for(let audioData of audioList) {
           const div = document.createElement('div');
           div.className = 'audio-card';
           div.innerHTML = `
