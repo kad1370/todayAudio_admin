@@ -20,32 +20,18 @@ body {
 
 h1 { text-align: center; color: #000; margin: 0; font-size: 1.8em; }
 
-/* [추가] 뒤로가기 버튼 디자인 */
-.back-btn {
-    position: absolute;
-    left: 0;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    background-color: rgba(255, 215, 0, 0.1);
-    border: 1px solid #eee8aa;
-    border-radius: 20px;
-    padding: 6px 12px;
-    font-size: 13px;
-    font-weight: 700;
-    color: #000;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-.back-btn:hover {
-    background-color: #ffd700;
-    box-shadow: 0 2px 8px rgba(255, 215, 0, 0.2);
-}
-.back-btn svg { transition: transform 0.2s; }
-.back-btn:hover svg { transform: translateX(-2px); }
-
 /* 2. 컨테이너 공통 스타일 */
 #registContainer, #listContainer {
+    background: #fff;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.listContainer, .addContainer {
     background: #fff;
     border-radius: 12px;
     padding: 24px;
@@ -150,37 +136,44 @@ input[type="text"] {
     #list { max-height: 400px; }
 }
 
-/* 다운로드 버튼 스타일 (뒤로가기 버튼 컨셉 계승) */
-.download-btn {
+/* 2. 공통 버튼 스타일 (뒤로가기, 추가, 다운로드 디자인 통일) */
+.back-btn, .add-btn, .download-btn, .download-btn-bottom {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    margin-top: 12px;
-    float: left;
     background-color: rgba(255, 215, 0, 0.1);
     border: 1px solid #eee8aa;
-    border-radius: 15px;
-    padding: 5px 12px;
-    font-size: 11px;
+    border-radius: 20px;
+    color: #000;
     font-weight: 700;
-    color: #000;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
+    padding: 6px 12px;
+    font-size: 11px;
 }
 
-.download-btn svg {
-    color: #000;
+.download-btn {
+    padding: 6px 12px;
+    margin-top: 20px;
+    width:27%;
+    float: left;
 }
 
-.download-btn:hover {
+.back-btn {
+    position: absolute;
+    left: 0;
+}
+
+.add-btn {
+    margin-left: 12px;
+}
+
+/* 모든 캡슐형 버튼 호버 효과 */
+.back-btn:hover, .add-btn:hover, .download-btn:hover, .download-btn-bottom:hover {
     background-color: #ffd700;
     border-color: #ffc400;
-    box-shadow: 0 2px 6px rgba(255, 215, 0, 0.2);
-    transform: translateY(-1px); /* 살짝 떠오르는 효과 */
-}
-
-.download-btn:active {
-    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(255, 215, 0, 0.2);
+    transform: translateY(-1px);
 }
 
 /* 플레이어 컨테이너 하단 정리 */
@@ -188,4 +181,89 @@ input[type="text"] {
     content: "";
     display: block;
     clear: both; /* float 해제 */
+}
+
+.audio-player-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+}
+
+.audio-controls {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.audio-controls audio {
+    width: 100%;
+    height: 40px;
+}
+
+/* 북마크 리스트 컨테이너 */
+.bookmark-container {
+    margin-top: 25px;
+    padding: 0px 15px;
+    background: #fdfdf5; /* 바디 배경색과 통일 */
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* 개별 북마크 행 */
+.bookmark-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+/* 3D 입체 시간 버튼 */
+.time-tag {
+    background: #ffffff;
+    border: 1px solid #eee8aa; /* 얇은 노란색 테두리 */
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #000;
+    cursor: pointer;
+    box-shadow: none; /* 그림자 완전히 제거 */
+    transition: all 0.2s ease;
+    min-width: 70px;
+    text-align: center;
+}
+
+/* 클릭 시 쑥 들어가는 효과 */
+.time-tag:active {
+    box-shadow: inset 3px 3px 6px #e5e5dd,
+                inset -3px -3px 6px #ffffff;
+    transform: scale(0.96);
+}
+
+.time-tag:hover {
+    color: #000;
+}
+
+/* 메모 입력란 */
+.memo-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #eee8aa;
+    padding: 5px 8px;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.memo-input:focus {
+    border-bottom-color: #ffd700;
+}
+
+.memo-input::placeholder {
+    color: #ccc;
+    font-style: italic;
 }

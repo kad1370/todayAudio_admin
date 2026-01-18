@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>오오</title>
+    <title>오오 - 상세 페이지</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="manifest" href="./manifest.json">
 </head>
@@ -15,87 +15,148 @@
     </button>
     <h1>⭐오늘의 오디오⭐</h1>
 </div>
-<div class="audio-card" id="20260118102028376">
-    <span class="title" name="title">ㅇㅇㅇㅇㅇㅇㅇ</span>
-    <span class="desc" name="desc">ㅇㅇㅇㅇㅇ</span>
+
+<div class="audio-card">
+    <span class="title" name="title">로드 중...</span>
+    <span class="desc" name="desc">잠시만 기다려 주세요.</span>
 </div>
-<div id="listContainer">
+
+<div class="listContainer">
     <div id="list">
         <div class="audio-player-container">
             <div class="audio-controls">
                 <audio controls playsinline preload="metadata"></audio>
             </div>
+            <button class="add-btn" id="addBtn" onclick="addTime()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            </button>
         </div>
-        <button class="download-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            <span>다운로드</span>
-        </button>
-
     </div>
+    <!-- <button class="download-btn" id="downloadBtn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <span>다운로드</span>
+    </button>     -->
+</div>
+<div id="bookmarkList" class="bookmark-container">
+    <p style="font-size:14px; font-weight:bold; color:#000;">✅ 북마크 ･ω･</p>
 </div>
 
 
 <script>
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const id = urlParams.get('id');
-    createAudioPlayer(id);
-
-    async function createAudioPlayer(id) {
-        const cache = await caches.open('audio-cache');
-        const cachedResponse = await cache.match(id);
-        const audioBlob = await cachedResponse.blob();
-        const data = JSON.parse(window.localStorage.getItem(id));
-        document.querySelector('[name="title"]').textContent = data.title;
-        document.querySelector('[name="desc"]').textContent = data.desc;
-
-        // 1. 임시 URL 생성
-        const audioUrl = URL.createObjectURL(audioBlob);
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const id = urlParams.get('id');
         const audio = document.querySelector('audio');
-        const downloadBtn = document.querySelector('.download-btn');
 
-        audio.src = audioUrl;
+        if (id) {
+            createAudioPlayer(id);
+        } else {
+            alert("잘못된 접근입니다.");
+            history.back();
+        }
 
-        downloadBtn.onclick = () => {
-            const a = document.createElement('a');
-            a.href = `${audioUrl}`; // 기존에 생성된 blob URL
-            a.download = `${id}.mp3`; // 파일명 설정
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-        };
+        async function createAudioPlayer(id) {
+            try {
+                // 1. 데이터 및 캐시 로드
+                const cache = await caches.open('audio-cache');
+                const cachedResponse = await cache.match(id);
 
-        // 3. 오디오 상태 관리 및 재생 로직
-        audio.addEventListener('play', async () => {
-            // 브라우저 정책 대응: AudioContext는 사용자 상호작용 후 재개되어야 함
-            // (현재 코드에서 Context를 사용하지 않는다면 이 부분은 생략 가능합니다)
-
-            if (audio.readyState <= 1) { // HAVE_NOTHING(0) 또는 HAVE_METADATA(1)
-                console.log('오디오 세션 리프레시 중...');
-                audio.load(); // src를 다시 할당하는 대신 load()로 충분한 경우가 많습니다.
-
-                // 필요 시 약간의 지연 후 재생
-                try {
-                    await new Promise(resolve => setTimeout(resolve, 200));
-                    await audio.play();
-                } catch (e) {
-                    console.warn('자동 재생이 차단되었습니다.');
+                if (!cachedResponse) {
+                    alert("오디오 파일을 찾을 수 없습니다.");
+                    return;
                 }
-            }
-        });
 
-        // 4. [중요] 메모리 누수 방지: 요소가 제거될 때 URL 해제
-        // 이 처리를 하지 않으면 페이지를 이동하기 전까지 메모리에 계속 남습니다.
-        const observer = new MutationObserver((mutations) => {
-            if (!document.body.contains(container)) {
-                URL.revokeObjectURL(audioUrl);
-                observer.disconnect();
-                console.log(`Resource revoked for ${id}`);
-            }
-        });
-        observer.observe(document.body, { childList: true });
+                const audioBlob = await cachedResponse.blob();
+                const data = JSON.parse(window.localStorage.getItem(id)) || { title: "제목 없음", desc: "설명 없음" };
 
-    }
-</script>
+                // 2. 화면 데이터 매핑
+                document.querySelector('[name="title"]').textContent = data.title;
+                document.querySelector('[name="desc"]').textContent = data.desc;
+
+                // 3. 오디오 URL 생성 및 설정
+                const audioUrl = URL.createObjectURL(audioBlob);
+
+                const addBtn = document.getElementById('addBtn');
+
+                /*
+                const downloadBtn = document.getElementById('downloadBtn');
+
+                audio.src = audioUrl;
+
+                // 5. 다운로드 버튼 클릭 이벤트
+                downloadBtn.onclick = () => {
+                    const a = document.createElement('a');
+                    a.href = audioUrl;
+                    a.download = `${data.title || id}.mp3`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                };
+
+                // 6. 메모리 관리: 페이지를 떠날 때 ObjectURL 해제
+                window.addEventListener('unload', () => {
+                    URL.revokeObjectURL(audioUrl);
+                });
+                */
+            } catch (error) {
+                console.error("오디오 플레이어 생성 실패:", error);
+                alert("오디오를 불러오는 중 오류가 발생했습니다.");
+            }
+        }
+
+        function addTime(){
+            let currentTime = formatTime(document.querySelector('audio').currentTime);
+            // 현재 재생 시간 가져오기 (초 단위)
+            const target = document.getElementById('bookmarkList');
+
+            // 2. DOM 요소 생성 (innerHTML 대신 createElement 권장)
+            const row = document.createElement('div');
+            row.className = 'bookmark-row';
+
+            // 시간 버튼 (클릭 시 이동)
+            const btn = document.createElement('button');
+            btn.className = 'time-tag';
+            btn.textContent = currentTime;
+            btn.onclick = () => {
+                audio.currentTime = timeToSeconds(currentTime);
+                audio.play();
+            };
+
+            // 메모 입력창
+            const input = document.createElement('input');
+            input.className = 'memo-input';
+            input.placeholder = '여기에 메모를 입력하세요...';
+
+            row.appendChild(btn);
+            row.appendChild(input);
+            target.appendChild(row);
+        }
+
+        function formatTime(seconds){
+            const hrs = Math.floor(seconds / 3600);      // 시간 계산
+            const min = Math.floor((seconds % 3600) / 60); // 분 계산
+            const sec = Math.floor(seconds % 60);        // 초 계산
+
+            // 한 자릿수일 때 앞에 0을 채워주는 함수
+            const pad = (num) => String(num).padStart(2, '0');
+
+            if (hrs > 0) {
+                // 1시간 이상일 때 (예: 01:05:30)
+                return `${pad(hrs)}:${pad(min)}:${pad(sec)}`;
+            } else {
+                // 1시간 미만일 때 (예: 05:30)
+                return `${pad(min)}:${pad(sec)}`;
+            }
+        }
+
+        function timeToSeconds(timeStr) {
+            const parts = timeStr.split(':').map(Number);
+            if (parts.length === 3) { // 시:분:초
+                return (parts[0] * 3600) + (parts[1] * 60) + parts[2];
+            } else { // 분:초
+                return (parts[0] * 60) + parts[1];
+            }
+        };
+    </script>
 </body>
 </html>
