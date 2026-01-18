@@ -11,12 +11,13 @@
 <div class="header-wrapper">
     <button class="back-btn" onclick="history.back()">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+
     </button>
     <h1>⭐오늘의 오디오⭐</h1>
 </div>
-<div class="audio-card">
-    <span class="title" name="title"></span>
-    <span class="desc" name="desc"></span>
+<div class="audio-card" id="20260118102028376">
+    <span class="title" name="title">ㅇㅇㅇㅇㅇㅇㅇ</span>
+    <span class="desc" name="desc">ㅇㅇㅇㅇㅇ</span>
 </div>
 <div id="listContainer">
     <div id="list">
@@ -50,8 +51,8 @@
 
         // 1. 임시 URL 생성
         const audioUrl = URL.createObjectURL(audioBlob);
-        const audio = container.querySelector('audio');
-        const downloadBtn = container.querySelector('.download-btn');
+        const audio = document.querySelector('audio');
+        const downloadBtn = document.querySelector('.download-btn');
 
         audio.src = audioUrl;
 
@@ -92,9 +93,8 @@
                 console.log(`Resource revoked for ${id}`);
             }
         });
-        observer.observe(target.parentNode || document.body, { childList: true });
+        observer.observe(document.body, { childList: true });
 
-        target.appendChild(container);
     }
 </script>
 </body>
