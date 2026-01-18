@@ -1,0 +1,155 @@
+/* 1. 기본 설정 */
+body {
+    font-family: 'Pretendard', -apple-system, sans-serif;
+    background-color: #fdfdf5;
+    padding: 40px 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    color: #000;
+    box-sizing: border-box;
+}
+
+h1 { text-align: center; color: #000; margin-bottom: 30px; font-size: 1.8em; }
+
+/* 2. 컨테이너 공통 스타일 */
+#registContainer, #listContainer {
+    background: #fff;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+/* 3. 섹션 타이틀 공통 디자인 (등록 & 목록 동일화) */
+.regist-header .section-title,
+#listContainer::before {
+    display: block;
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #000;
+    border-left: 5px solid #ffd700;
+    padding-left: 10px;
+    margin: 0 0 20px 0; /* 아래쪽 여백 통일 */
+}
+
+/* 목록 헤더 가상 요소(::before)와 등록 타이틀 위치 맞춤 */
+#listContainer::before {
+    content: "오오🐝";
+}
+
+/* 4. 등록 영역 상단 레이아웃 (데스크탑) */
+.regist-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 5px;
+}
+
+#regist {
+    padding: 10px 24px;
+    background-color: #ffd700;
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.2s;
+}
+#regist:hover { background-color: #ffc400; }
+
+/* 5. 입력 폼 레이아웃 */
+.input-row { display: flex; flex-direction: column; gap: 15px; }
+.field-group { display: flex; align-items: center; gap: 12px; }
+.field-label {
+    width: 45px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #000;
+    flex-shrink: 0;
+}
+input[type="text"] {
+    flex: 1; padding: 12px; border: 1px solid #eee8aa;
+    border-radius: 8px; box-sizing: border-box; outline: none; font-size: 14px; color: #000;
+}
+
+/* 6. 파일 업로드 영역 (버튼 좌측) */
+.file-upload-wrapper {
+    display: flex; flex: 1; align-items: center;
+    background-color: #fff; padding: 5px;
+    border-radius: 8px; border: 1px solid #eee8aa; overflow: hidden;
+}
+.file-select-btn {
+    padding: 8px 15px; background-color: #fff9c4; color: #000;
+    border: 1px solid #eee8aa; border-radius: 6px; font-size: 12px;
+    font-weight: bold; cursor: pointer; flex-shrink: 0; margin-right: 10px;
+}
+#fileName { flex: 1; font-size: 13px; color: #000; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* 7. 목록 영역 내부 검색창 */
+.list-header { border-bottom: 1px solid #fff9c4; padding-bottom: 15px; margin-bottom: 15px; }
+#searchContainer { display: flex; gap: 8px; }
+#searchContainer input { flex: 1; padding: 12px 15px; border: 1px solid #eee8aa; border-radius: 8px; outline: none; }
+#searchContainer button { background-color: #ffd700; color: #000; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; padding: 0 20px; }
+
+/* 8. 오디오 목록 스크롤 적용 */
+#list {
+    max-height: 500px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+#list::-webkit-scrollbar { width: 6px; }
+#list::-webkit-scrollbar-track { background: #fdfdf5; }
+#list::-webkit-scrollbar-thumb { background: #ffd700; border-radius: 10px; }
+
+/* 9. 오디오 카드 및 플레이어 */
+.audio-card { padding: 20px 12px; border-bottom: 1px solid #fff9c4; cursor: pointer; display: flex; flex-direction: column; gap: 4px; }
+.audio-card .title { font-weight: 900; color: #000; font-size: 1.15em; display: block; }
+.audio-card .desc { color: #777; font-size: 0.85em; font-weight: 400; display: block; }
+.audio-player-container { width: 100%; margin-top: 15px; background: #fff; }
+audio { width: 100%; height: 40px; }
+.download-link { font-size: 11px; color: #aaa; text-decoration: underline; display: block; text-align: right; margin-top: 8px; font-weight: bold; }
+
+/* 📱 10. 반응형 웹 최적화 (등록 영역 스타일을 목록과 동일하게 통일) */
+@media (max-width: 600px) {
+    body { padding: 20px 15px; }
+    h1 { font-size: 1.5em; }
+
+    #registContainer, #listContainer { padding: 18px; }
+
+    /* 모바일에서 등록 헤더 구조를 목록 제목처럼 변경 */
+    .regist-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+        margin-bottom: 0;
+        border-bottom: none;
+    }
+
+    /* '새 오오 등록' 제목 스타일을 '오오 목록'과 완벽히 일치시킴 */
+    .regist-header .section-title {
+        border-left: 5px solid #ffd700;
+        margin-bottom: 20px;
+        width: 100%;
+        text-align: left;
+    }
+
+    #regist {
+        width: 100%;
+        height: 45px;
+        font-size: 16px;
+        margin-bottom: 20px; /* 제목과 입력창 사이가 아닌, 등록 버튼을 하단이나 상단에 배치 가능 */
+        order: 2; /* 버튼을 입력창 아래로 보냄 */
+    }
+
+    .input-row { order: 1; margin-bottom: 15px; }
+
+    .field-group { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .field-label { width: 100%; margin-bottom: 2px; }
+
+    input[type="text"], .file-upload-wrapper { width: 100%; }
+
+    #list { max-height: 400px; }
+}

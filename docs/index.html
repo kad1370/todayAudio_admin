@@ -2,99 +2,61 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8" />
-    <title>성공자 오디오</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오오</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="manifest" href="./manifest.json">
 </head>
 <body>
-<h1>오오</h1>
-<div>
-    <input name="title" placeholder="제목"></input>
-    <input name="desc" placeholder="내용"></input>
-    <input name="file" placeholder="파일"></input>
-    <buttion id="regist" onclick="regist()">등록하기</buttion>
-</div>
-<div>
-    <input name="search" placeholder="검색어를 입력하세요"></input>
-    <buttion id="search" onclick="search()">검색</buttion>
-</div>
-<div id="list"></div>
-<script>
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('./service-worker.js');
-    }
-    const ADMIN_TOKEN = 'ba10cc7b9ba5b27317d546824a01203d89c0ea3e0972fab50cb786ab5a702dff';
+<h1>⭐오늘의 오디오⭐</h1>
 
-    (async () => {
-        const response = await fetch('https://todayaudio.writer1370.workers.dev/api/list', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${ADMIN_TOKEN}`
-          }
-        });
+<div id="registContainer">
+    <div class="regist-header">
+        <p class="section-title">새 오오 등록 🐝</p>
+    </div>
 
-        const data = await response.json();
-        let audioList = data.audioList;
+    <div class="input-row">
+        <div class="field-group">
+            <label class="field-label">제목</label>
+            <input type="text" name="title" id="title" placeholder="제목을 입력하세요">
+        </div>
 
-        const list = document.getElementById('list');
+        <div class="field-group">
+            <label class="field-label">설명</label>
+            <input type="text" name="desc" id="desc" placeholder="내용을 입력하세요">
+        </div>
 
-        for(let audioData of audioList) {
-          const div = document.createElement('div');
-          div.className = 'audio-card';
-          div.innerHTML = `
-            <span>${audioData.title}</span>
-            <span>${audioData.description}</span>
-            <div>
-                <audio controls playsinline preload="metadata" src="${audioData.url}"></audio>
-                <a href="${audioData.url}" download>⬇️ 다운로드</a>
+        <div class="field-group">
+            <label class="field-label">파일</label>
+            <div class="file-upload-wrapper">
+                <label for="fileInput" class="file-select-btn">파일 선택</label>
+                <span id="fileName">선택된 파일 없음</span>
+                <input type="file" id="fileInput" name="myFile" style="display: none;">
             </div>
-          `;
-          list.appendChild(div);
+        </div>
+        <button id="regist" onclick="regist()">등록하기</button>
 
-          const audioElement = div.querySelector('audio');
-          const audioCtx = new AudioContext();
-          audioElement.addEventListener('play', async () => {
-            // 1. 상태가 1(Metadata만 있음)이거나 에러 상태라면 강제 리셋
-            if (audioElement.readyState === 1 || audioElement.readyState === 0) {
-                const currentSrc = audioElement.src;
-                audioElement.src = ''; // 소스를 비웠다가
-                audioElement.src = currentSrc; // 다시 넣어서 세션을 완전히 새로 고침
-                audioElement.load();
+    </div>
+</div>
 
-                await new Promise(resolve => setTimeout(resolve, 200));
-            }
-          });
-        }
-    })();
+<div id="listContainer">
+    <div class="list-header">
+        <div id="searchContainer">
+            <input id="searchInput" name="search" placeholder="제목이나 내용으로 검색하세요">
+           <!-- <button id="searchBtn">검색</button>-->
+        </div>
+    </div>
 
+    <div id="list">
+    </div>
+</div>
 
-    function regist(){
-        const now = new Date();
-        const year = now.getFullYear();
-        const month = String(now.getMonth() + 1).padStart(2, '0');
-        const day = String(now.getDate()).padStart(2, '0');
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        const seconds = String(now.getSeconds()).padStart(2, '0');
-
-        const yyyymmddhhmmss = `${year}${month}${day}${hours}${minutes}${seconds}`;
-
-        let data = {
-            id : yyyymmddhhmmss,
-            title : document.getElementsByName("title")[0].value,
-            description : document.getElementsByName("desc")[0].value
-        }
-
-        fetch('https://todayaudio.writer1370.workers.dev/api/upload', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${ADMIN_TOKEN}`
-          },
-          body: JSON.stringify(data)
-        });
-    }
+<script>
+    // 파일명 표시 스크립트
+    document.getElementById('fileInput').addEventListener('change', function(e) {
+        const fileName = e.target.files[0] ? e.target.files[0].name : "선택된 파일 없음";
+        document.getElementById('fileName').textContent = fileName;
+    });
 </script>
 <script src="app.js"></script>
 </body>
