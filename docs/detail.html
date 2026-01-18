@@ -77,11 +77,10 @@
                 const audioUrl = URL.createObjectURL(audioBlob);
 
                 const addBtn = document.getElementById('addBtn');
+                audio.src = audioUrl;
 
                 /*
                 const downloadBtn = document.getElementById('downloadBtn');
-
-                audio.src = audioUrl;
 
                 // 5. 다운로드 버튼 클릭 이벤트
                 downloadBtn.onclick = () => {
