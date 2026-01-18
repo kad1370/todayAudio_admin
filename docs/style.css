@@ -23,8 +23,7 @@ h1 { text-align: center; color: #000; margin-bottom: 30px; font-size: 1.8em; }
 }
 
 /* 3. 섹션 타이틀 공통 디자인 (등록 & 목록 동일화) */
-.regist-header .section-title,
-#listContainer::before {
+.regist-header .section-title {
     display: block;
     font-weight: bold;
     font-size: 1.1em;
@@ -34,11 +33,11 @@ h1 { text-align: center; color: #000; margin-bottom: 30px; font-size: 1.8em; }
     margin: 0 0 20px 0; /* 아래쪽 여백 통일 */
 }
 
-/* 목록 헤더 가상 요소(::before)와 등록 타이틀 위치 맞춤 */
+/* 목록 헤더 가상 요소(::before)와 등록 타이틀 위치 맞춤
 #listContainer::before {
     content: "오오🐝";
 }
-
+*/
 /* 4. 등록 영역 상단 레이아웃 (데스크탑) */
 .regist-header {
     display: flex;

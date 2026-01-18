@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오오</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="manifest" href="./manifest.json">
+</head>
+<body>
+<h1>⭐오늘의 오디오⭐</h1>
+<div class="audio-card" id="20260118102028376">
+    <span class="title" name="title">ㅇㅇㅇㅇㅇㅇㅇ</span>
+    <span class="desc" name="desc">ㅇㅇㅇㅇㅇ</span>
+</div>
+<div id="listContainer">
+    <div id="list">
+    </div>
+</div>
+
+<script>
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const id = urlParams.get('id');
+    createAudioPlayer(id);
+
+    async function createAudioPlayer(id) {
+        const cache = await caches.open('audio-cache');
+        const cachedResponse = await cache.match(id);
+        const audioBlob = await cachedResponse.blob();
+        const data = JSON.parse(window.localStorage.getItem(id));
+        document.querySelector('[name="title"]').textContent = data.title;
+        document.querySelector('[name="desc"]').textContent = data.desc;
+
+        // 1. 임시 URL 생성
+        const audioUrl = URL.createObjectURL(audioBlob);
+        const target = document.getElementById('list');
+
+        // 2. DOM 요소 생성 (innerHTML 대신 createElement 권장)
+        const container = document.createElement('div');
+        container.className = 'audio-player-container';
+
+        container.innerHTML = `
+            <div class="audio-controls">
+                <audio controls playsinline preload="metadata"></audio>
+                <a href="${audioUrl}" download="${id}.mp3" class="download-link">⬇️ 다운로드</a>
+            </div>
+        `;
+
+        const audio = container.querySelector('audio');
+        audio.src = audioUrl;
+
+        // 3. 오디오 상태 관리 및 재생 로직
+        audio.addEventListener('play', async () => {
+            // 브라우저 정책 대응: AudioContext는 사용자 상호작용 후 재개되어야 함
+            // (현재 코드에서 Context를 사용하지 않는다면 이 부분은 생략 가능합니다)
+
+            if (audio.readyState <= 1) { // HAVE_NOTHING(0) 또는 HAVE_METADATA(1)
+                console.log('오디오 세션 리프레시 중...');
+                audio.load(); // src를 다시 할당하는 대신 load()로 충분한 경우가 많습니다.
+
+                // 필요 시 약간의 지연 후 재생
+                try {
+                    await new Promise(resolve => setTimeout(resolve, 200));
+                    await audio.play();
+                } catch (e) {
+                    console.warn('자동 재생이 차단되었습니다.');
+                }
+            }
+        });
+
+        // 4. [중요] 메모리 누수 방지: 요소가 제거될 때 URL 해제
+        // 이 처리를 하지 않으면 페이지를 이동하기 전까지 메모리에 계속 남습니다.
+        const observer = new MutationObserver((mutations) => {
+            if (!document.body.contains(container)) {
+                URL.revokeObjectURL(audioUrl);
+                observer.disconnect();
+                console.log(`Resource revoked for ${id}`);
+            }
+        });
+        observer.observe(target.parentNode || document.body, { childList: true });
+
+        target.appendChild(container);
+    }
+</script>
+</body>
+</html>
