@@ -1,6 +1,6 @@
 {
   "name": "Today Audio",
-  "short_name": "TodayAudio",
+  "short_name": "오오",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
