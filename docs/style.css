@@ -1,82 +1,75 @@
-/* 1. 모든 요소에 폰트 및 박스 크기 기준 적용 */
+/* 1. 모든 요소 공통 및 폰트 설정 */
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box; /* 레이아웃 깨짐 방지 */
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+    box-sizing: border-box;
 }
 
-/* 3. 폼 요소(버튼, 인풋 등)에도 폰트 강제 적용 */
 button, input, textarea, select {
-    font-family: inherit;
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     font-size: inherit;
 }
 
-/* 1. 기본 설정 */
 body {
-    font-family: 'Pretendard', -apple-system, sans-serif;
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     background-color: #fdfdf5;
     padding: 40px 20px;
     max-width: 800px;
     margin: 0 auto;
     color: #000;
-    box-sizing: border-box;
-    -webkit-font-smoothing: antialiased;    /* 맥/아이폰에서 글자를 매끄럽게 */
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;    /* 가독성 최적화 */
-    line-height: 1.5;                      /* 줄 간격 기본값 (가독성 향상) */
-    word-break: keep-all;                  /* 한글 줄바꿈 최적화 */
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    line-height: 1.5;
+    word-break: keep-all;
 }
 
-/* [추가] 헤더 배치를 위한 래퍼 */
+/* 2. 헤더 및 네비게이션 
 .header-wrapper {
     display: flex;
-    align-items: left;
     position: relative;
     margin-bottom: 30px;
-    justify-content: center; /* 제목 중앙 */
+    justify-content: center;
+    align-items: center;
+}
+*/
+/* 3. 헤더 레이아웃 수정 */
+.header-wrapper {
+    display: flex;
+    align-items: center;    /* 수직 중앙 정렬 */
+    justify-content: center; /* 제목(있을 경우) 중앙 정렬 */
+    position: relative;     /* 버튼 배치의 기준점 */
+    width: 100%;
+    min-height: 40px;       /* 버튼 높이에 맞춘 최소 높이 */
+    margin-bottom: 30px;
 }
 
-h1 { text-align: center; color: #000; margin: 0; font-size: 1.8em; }
+h1 { font-size: 1.8em; color: #000; text-align: center; margin: 0; }
 
-/* 2. 컨테이너 공통 스타일 */
+
+
+/* 3. 컨테이너 공통 스타일 */
 #registContainer, #listContainer {
-    background: #fdfdf5;
+    background: transparent; /* 배경색은 내부 wrapper나 필요 시 적용 */
     border-radius: 12px;
     padding: 24px;
     margin-bottom: 30px;
-    /* box-shadow: 0 4px 15px rgba(255, 215, 0, 0.1); */
     display: flex;
     flex-direction: column;
 }
 
-.listContainer, .addContainer {
-    background: #fff;
-    border-radius: 12px;
-    padding: 24px;
-    margin-bottom: 30px;
-    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-}
-
-/* 3. 섹션 타이틀 공통 디자인 */
-.regist-header .section-title {
-    display: block;
-    font-weight: bold;
-    font-size: 1.1em;
-    color: #000;
-    border-left: 0px solid #ffd700;
-    padding-left: 10px;
-    margin: 0 0 20px 0;
-}
-
-/* 4. 등록 영역 상단 레이아웃 */
+/* 4. 등록(Input) 영역 스타일 */
 .regist-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    /* margin-bottom: 5px; */
+    margin-bottom: 20px;
+}
+
+.regist-header .section-title {
+    font-weight: bold;
+    font-size: 1.1em;
+    border-left: 3px solid #ffd700;
+    padding-left: 10px;
 }
 
 #regist {
@@ -88,255 +81,211 @@ h1 { text-align: center; color: #000; margin: 0; font-size: 1.8em; }
     font-weight: bold;
     cursor: pointer;
     font-size: 14px;
-    transition: background 0.2s;
 }
 
-/* 5. 입력 폼 레이아웃 */
 .input-row { display: flex; flex-direction: column; gap: 15px; }
 .field-group { display: flex; align-items: center; gap: 12px; width: 100%; }
-.field-label {
-    width: 45px;
-    font-size: 14px;
-    font-weight: bold;
-    color: #000;
-    flex-shrink: 0;
-}
+.field-label { width: 45px; font-size: 14px; font-weight: bold; flex-shrink: 0; }
+
 input[type="text"] {
     flex: 1; padding: 12px; border: 1px solid #eee8aa;
-    border-radius: 8px; box-sizing: border-box; outline: none; font-size: 14px; color: #000;
-    min-width: 0;
+    border-radius: 8px; outline: none; font-size: 14px; background: #fff;
 }
 
-/* 6. 파일 업로드 영역 */
 .file-upload-wrapper {
     display: flex; flex: 1; align-items: center;
     background-color: #fff; padding: 5px;
-    border-radius: 8px; border: 1px solid #eee8aa; overflow: hidden;
+    border-radius: 8px; border: 1px solid #eee8aa;
 }
+
 .file-select-btn {
-    padding: 8px 15px; background-color: #fff9c4; color: #000;
-    border: 1px solid #eee8aa; border-radius: 6px; font-size: 12px;
-    font-weight: bold; cursor: pointer; flex-shrink: 0; margin-right: 10px;
+    padding: 8px 15px; background-color: #fff9c4;
+    border: 1px solid #eee8aa; border-radius: 6px;
+    font-size: 12px; font-weight: bold; cursor: pointer; margin-right: 10px;
 }
 
-/* 7. 목록 및 검색 */
-.list-header { border-bottom: 1px solid #fff9c4; padding-bottom: 0px; margin-bottom: 15px; }
+.file-name {
+    font-size: 12px; font-weight: bold; 
+}
+
+/* 5. 목록(List) 헤더 및 검색바 (Sticky) */
+.list-header { 
+    position: sticky;
+    top: -24px;
+    background: #fdfdf5; /* 바디 배경과 동일하게 하여 겹침 방지 */
+    z-index: 100;
+    padding-bottom: 25px; 
+    margin-bottom: 10px;
+}
+
 #searchContainer { display: flex; gap: 8px; }
-#searchContainer input { flex: 1; padding: 12px 15px; border: 1px solid #eee8aa; border-radius: 8px; outline: none; }
-#searchContainer button { background-color: #ffd700; color: #000; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; padding: 0 20px; }
+#searchContainer input { 
+    flex: 1; padding: 12px 15px; border: 1px solid #eee8aa; 
+    border-radius: 8px; outline: none; background: #fff;
+}
 
-/* 8. 오디오 목록 스크롤 */
-#list { max-height: 500px; overflow-y: auto; padding-right: 5px; }
+/* 6. 목록 스크롤 및 플로팅 버튼 */
+.list-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+#list { 
+    max-height: 550px; 
+    overflow-y: auto; 
+    padding-right: 8px;
+}
+
 #list::-webkit-scrollbar { width: 6px; }
-#list::-webkit-scrollbar-thumb { background: #ffd700; border-radius: 10px; }
+#list::-webkit-scrollbar-thumb { 
+    background: rgba(255, 215, 0, 0.4);
+    border-radius: 10px;
+    background-clip: padding-box; 
+    border-top: 10px solid transparent; 
+    border-bottom: 40px solid transparent;
+}
 
-/* 9. 오디오 카드 */
+.floating-add-btn {
+    position: absolute;
+    right: 15px;
+    bottom: 15px;
+    width: 50px;
+    height: 50px;
+    background-color: #ffd700;
+    border: none;
+    border-radius: 50%;
+    color: #000;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 101;
+    transition: transform 0.2s;
+}
+
+/* 7. 오디오 카드 (목록 깨짐 방지 - 핵심 수정본) */
 .audio-card { 
     padding: 20px 12px; 
     border-bottom: 1px solid #fff9c4; 
     cursor: pointer; 
     display: flex; 
     flex-direction: column; 
-    gap: 4px; 
-}
-
-.audio-card .title { 
-    font-weight: 600; 
-    color: #000; 
-    font-size: 0.8em;
-    /* 가로 길이 고정 및 줄바꿈 설정 */
-    width: 100%;                 /* 전체 폭의 70%만 차지 (수치 조절 가능) */
-    word-break: keep-all;       /* 한글 단어 단위로 예쁘게 줄바꿈 */
-    white-space: normal;        /* 자동 줄바꿈 허용 */
-}
-.audio-card .desc { color: #777; font-size: 0.8em; }
-.audio-card:hover {
-    background-color: #fff;
-    box-shadow: 0 2px 8px rgba(255, 215, 0, 0.2);
-    transform: translateY(-1px);
-}
-/* 날짜 스타일 공통 */
-.audio-card .date {
-    font-size: 0.6em;
-    color: #999;
-    font-weight: 400;
+    gap: 6px;
     width: 100%;
 }
 
+/* detail.html 내의 audio-card 간격 조정 */
 .detail-wrapper .audio-card {
-    border-bottom: 0px solid #fff9c4; 
+    border-bottom: none;
+    padding: 10px 0 20px 0;
 }
 
-/* 1번 우측 배치를 위한 헤더 설정 예시 
-.card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.title { 
+    font-weight: 700; 
+    color: #000; 
+    font-size: 13px; 
+    display: block; /* 깨짐 방지 */
     width: 100%;
-    gap: 4px;
-}
-*/
-/* 📱 10. 반응형 최적화 */
-@media (max-width: 600px) {
-    body { padding: 20px 10px; }
-    h1 { font-size: 1.4em; }
-    
-    .back-btn { padding: 5px 10px; font-size: 12px; }
-
-    #registContainer, #listContainer { padding: 18px; }
-
-    .regist-header { flex-direction: column; align-items: flex-start; }
-    #regist { width: 100%; order: 2; margin-bottom: 20px; height: 45px; }
-    .input-row { order: 1; margin-bottom: 15px; width: 100%; }
-
-    /* 모바일에서도 한 줄 유지 */
-    .field-group { flex-direction: row; gap: 10px; }
-    .field-label { width: 35px; font-size: 13px; }
-    
-    #list { max-height: 400px; }
+    word-break: break-all;
+    white-space: normal;
 }
 
-.add-btn, .skip-btn {
+.audio-card .desc { 
+    color: #777; 
+    font-size: 13px; 
+    display: block; /* 깨짐 방지 */
+    width: 100%;
+    word-break: break-all;
+    white-space: normal;
+}
+
+.audio-card .date { font-size: 11px; color: #999; margin-top: 2px; }
+
+/* 8. 상세 페이지 플레이어 및 컨트롤 */
+.player-container {
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 20px;
+    border: 0px solid #eee8aa;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.1);
+}
+
+audio {
+    width: 100%;
+    height: 40px;
+    filter: sepia(20%) saturate(70%) hue-rotate(10deg);
+    margin-bottom: 15px;
+}
+
+.control-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* 공통 캡슐형 버튼 */
+.add-btn, .skip-btn, .download-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 5px;
-    background-color: rgba(255, 215, 0, 0.1);
-    border: 1px solid #eee8aa;
-    border-radius: 20px;
-    color: #444;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    padding: 8px 14px; /* 기존보다 살짝 더 키워 터치하기 편하게 함 */
-    font-size: 11px;
-}
-
-/* 2. 공통 버튼 스타일 (뒤로가기, 추가, 다운로드 디자인 통일) */
-.back-btn, .download-btn, .download-btn-bottom {
-    display: inline-flex;
-    align-items: center;
     gap: 6px;
     background-color: rgba(255, 215, 0, 0.1);
     border: 1px solid #eee8aa;
     border-radius: 20px;
     color: #000;
     font-weight: 700;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    padding: 6px 12px;
+    padding: 8px 14px;
     font-size: 11px;
+    cursor: pointer;
+    transition: all 0.2s;
 }
 
-.download-btn {
-    padding: 6px 12px;
-    margin-top: 20px;
-    width:27%;
-    float: left;
-}
-
-.back-btn {
-    position: absolute;
-    left: 0;
-}
-
-/* 모든 캡슐형 버튼 호버 효과 */
-.back-btn:hover, .download-btn:hover, .download-btn-bottom:hover {
+.add-btn:hover, .skip-btn:hover {
     background-color: #ffd700;
-    border-color: #ffc400;
-    box-shadow: 0 2px 8px rgba(255, 215, 0, 0.2);
     transform: translateY(-1px);
 }
 
-/* 2. 이동 버튼 호버 효과 
-.skip-btn:hover {
-    background-color: #ffd700;
-    border-color: #ffd700;
-}
-*/
-
-.skip-btn:hover, .add-btn:hover {
-    background-color: #ffd700;
-    color: #000;
-    border-color: #ffd700;
-}
-
-/* 플레이어 컨테이너 하단 정리 */
-.audio-player-container::after {
-    content: "";
-    display: block;
-    clear: both; /* float 해제 */
-}
-
-.audio-player-container {
-    display: flex;
-    flex-direction: row; 
-    align-items: center; 
-    width: 100%;
-}
-
-.audio-controls {
-    flex: 1; 
-    display: flex;
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin: 15px 0;
-}
-
-.audio-controls audio {
-    width: 100%;
-    height: 40px;
-}
-
-/* 북마크 리스트 컨테이너 */
+/* 9. 북마크 영역 */
 .bookmark-container {
     margin-top: 25px;
     padding: 0px 15px;
-    background: #fdfdf5; /* 바디 배경색과 통일 */
+    background: #fdfdf5;
     border-radius: 12px;
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
 
-/* 개별 북마크 행 */
-.bookmark-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
+.bookmark-title {
+    margin-bottom:25px;
 }
 
-/* 3D 입체 시간 버튼 */
+.bookmark-row { display: flex; align-items: center; gap: 10px; width: 100%; margin-bottom:10px;}
+
 .time-tag {
     background: #ffffff;
-    border: 1px solid #eee8aa; /* 얇은 노란색 테두리 */
+    border: 1px solid #eee8aa;
     border-radius: 8px;
     padding: 8px 12px;
     font-size: 13px;
     font-weight: 700;
     color: #000;
     cursor: pointer;
-    box-shadow: none; /* 그림자 완전히 제거 */
-    transition: all 0.2s ease;
     min-width: 70px;
     text-align: center;
+    transition: all 0.2s ease;
 }
 
-/* 클릭 시 쑥 들어가는 효과 */
 .time-tag:active {
-    box-shadow: inset 3px 3px 6px #e5e5dd, 
-                inset -3px -3px 6px #ffffff;
+    box-shadow: inset 2px 2px 5px rgba(0,0,0,0.1);
     transform: scale(0.96);
 }
 
-.time-tag:hover {
-    color: #000;
-}
-
-/* 메모 입력란 */
 .memo-input {
     flex: 1;
     background: transparent;
@@ -348,86 +297,74 @@ input[type="text"] {
     transition: border-color 0.3s;
 }
 
-.memo-input:focus {
-    border-bottom-color: #ffd700;
-}
+.memo-input:focus { border-bottom-color: #ffd700; }
 
-.memo-input::placeholder {
-    color: #ccc;
-    font-style: italic;
-}
-
-/* 로딩바 */
-/* 동그라미 스피너 본체 */
-.spinner {
-    width: 40px;
-    height: 40px;
-    border: 4px solid rgba(255, 215, 0, 0.2);
-    border-top: 4px solid #ffd700;
-    border-radius: 50%;
-    
-    /* 좌측 쏠림 방지를 위한 설정 */
-    display: block;      /* block 요소로 선언 */
-    margin: 0 auto;      /* 좌우 여백을 자동으로 채워 중앙 정렬 */
-    
-    animation: spin 1s linear infinite;
-}
-
-/* 부모 컨테이너 (정렬의 핵심) */
+/* 10. 로딩 애니메이션 */
 .loading-wrapper {
-    width: 100%;         /* 전체 너비를 차지해야 자식인 스피너가 중앙에 옴 */
-    text-align: center;  /* 텍스트와 inline 요소들을 위한 중앙 정렬 */
+    width: 100%;
+    text-align: center;
     display: flex;
     flex-direction: column;
-    align-items: center; /* 자식 요소들을 수직축 기준 중앙으로 */
+    align-items: center;
     justify-content: center;
     padding: 30px 0;
 }
 
-/* 회전 애니메이션 */
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+.spinner {
+    width: 40px; height: 40px;
+    border: 4px solid rgba(255, 215, 0, 0.2);
+    border-top: 4px solid #ffd700;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
 }
 
-/* 로딩 텍스트 */
-.loading-text {
-    font-size: 13px;
-    font-weight: 400;
-    color: #777;
-    text-align: center; /* 텍스트 자체 중앙 정렬 */
-    letter-spacing: -0.5px;
-    padding-top:20px;
-    animation: pulse 1.5s infinite;
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
+.loading-text { font-size: 13px; color: #777; padding-top:20px; animation: pulse 1.5s infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+/* 📱 반응형 최적화 */
+@media (max-width: 600px) {
+    body { padding: 20px 10px; }
+    #registContainer, #listContainer { padding: 18px; }
+    .regist-header { flex-direction: column; gap: 10px; }
+    #regist { width: 100%; height: 45px; }
 }
 
-/* 로딩 텍스트 애니메이션 (깜빡임) */
-@keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
-}
-
-/* 순정 오디오 태그 스타일 커스텀 (둥글게) */
-audio {
-    width: 100%;
-    height: 40px;
-    filter: sepia(20%) saturate(70%) hue-rotate(10deg); /* 노란 톤에 맞춘 색감 조절 */
-    margin-bottom: 15px;
-}
-/* 하단 버튼 그룹 컨트롤러 */
-.control-group {
-    display: flex;
-    justify-content: center;
+/* 뒤로가기 버튼 위치 고정 */
+.back-btn {
+    position: absolute;     /* 부모(header-wrapper) 기준 절대 위치 */
+    left: 0;                /* 왼쪽 끝에 밀착 */
+    top: 50%;               /* 부모 높이의 절반 위치 */
+    transform: translateY(-50%); /* 버튼 자체 높이만큼 보정하여 정중앙 배치 */
+    
+    display: inline-flex;
     align-items: center;
-    gap: 8px; /* 버튼 사이 간격 */
-    flex-wrap: wrap;
-}
-.player-container {
-    background: #ffffff;
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.1);
-    border: 0px solid #eee8aa;
-    margin-bottom: 20px;
+    justify-content: center;
+    background-color: rgba(255, 215, 0, 0.1);
+    border: 1px solid #eee8aa;
+    border-radius: 20px;
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 10;
 }
 
+.back-btn:hover {
+    background-color: #ffd700;
+    border-color: #ffc400;
+    transform: translateY(-50%) scale(1.05); /* 호버 시에도 중앙 유지하며 확대 */
+}
+
+/* SVG 아이콘 간격 (필요시) */
+.back-btn svg {
+    display: block;
+}
+
+/*
+.back-btn {
+    position: absolute;
+    left: 0;
+    z-index: 10;
+}
+*/

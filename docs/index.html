@@ -10,70 +10,31 @@
 <body>
 <!-- <h1>⭐오늘의 오디오⭐</h1> -->
 
-<div id="registContainer">
-    <div class="regist-header">
-        <p class="section-title">새 오오 등록 🐝</p>
-    </div>
-
-    <div class="input-row">
-        <div class="field-group">
-            <label class="field-label">제목</label>
-            <input type="text" name="title" id="title" placeholder="제목을 입력하세요">
-        </div>
-
-        <div class="field-group">
-            <label class="field-label">설명</label>
-            <input type="text" name="desc" id="desc" placeholder="내용을 입력하세요">
-        </div>
-
-        <div class="field-group">
-            <label class="field-label">파일</label>
-            <div class="file-upload-wrapper">
-                <label for="fileInput" class="file-select-btn">파일 선택</label>
-                <span id="fileName">선택된 파일 없음</span>
-                <input type="file" id="fileInput" name="myFile" style="display: none;">
-            </div>
-        </div>
-        <button id="regist" onclick="regist()">등록하기</button>
-
-    </div>
-</div> 
+<!-- 
+ 
+-->
 
 <div id="listContainer">
-    <div class="regist-header">
+    <!-- <div class="regist-header">
         <p class="section-title">오오</p>
-    </div>
+    </div> -->
     <div class="list-header">
         <div id="searchContainer">
-            <input id="searchInput" name="search" placeholder="제목이나 내용으로 검색하세요">
-           <!-- <button id="searchBtn">검색</button>-->
+            <input id="searchInput" placeholder="검색하세요 ... ･ω･">
         </div>
     </div>
 
-    <div id="list">
-        <!-- 
-        <div class="audio-card">
-            <div class="card-header">
-                <span class="title">오디오 제목</span>
-                <span class="date">2024.05.22</span>
+    <div class="list-wrapper">
+        <div id="list">
             </div>
-            <div class="desc">오디오에 대한 설명이 들어갑니다.</div>
-        </div>           
-        -->
+        
+        <button class="floating-add-btn" onClick="loadRegistPage()">＋</button>
     </div>
 </div>
 <div class="loading-container" style="display: none;">
     <div class="loading-bar"></div>
 </div>
-<script>
-    // 파일명 표시 스크립트
-    /*
-    document.getElementById('fileInput').addEventListener('change', function(e) {
-        const fileName = e.target.files[0] ? e.target.files[0].name : "선택된 파일 없음";
-        document.getElementById('fileName').textContent = fileName;
-    });
-    */
-</script>
-<script src="app.js"></script>
 </body>
+<script src="app.js"></script>    
+
 </html>

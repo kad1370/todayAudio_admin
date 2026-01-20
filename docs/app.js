@@ -62,9 +62,7 @@ function makeList(audioList){
      // 클래스명을 추가하여 CSS가 적용되도록 수정
      div.innerHTML = `
         <div class="date">${date}</div>
-        <div class="card-header">
-        <span class="title">${audioData.title}</span>
-        </div>
+        <div class="title">${audioData.title}</div>
         <div class="desc">${audioData.description}</div>
      `;
 
@@ -88,6 +86,9 @@ function loadDetailPage($this,id){
     window.location.href = "detail.html?id="+id; 
 }
 
+function loadRegistPage(){
+    window.location.href = "regist.html"; 
+}
 /*
 async function loadAndPlayAudio($this, id) {
     try {
@@ -119,55 +120,3 @@ async function loadAndPlayAudio($this, id) {
     //window.location.href = "detail.html?id="+id;
 }
 */
-/*------------------------------------
-    파일 업로드
-------------------------------------*/
-async function regist(){
-
-    // 1. 입력 요소 참조
-    const titleInput = document.getElementById('title');
-    const descInput = document.getElementById('desc');
-    const fileInput = document.getElementById('fileInput');
-    const fileNameSpan = document.getElementById('fileName');
-
-    let data = {
-        title: titleInput.value,
-        description: descInput.value
-    };
-
-    // 2. 유효성 검사
-    if (!data.title || data.title.trim() === "") {
-        alert("제목을 입력하세요");
-        return;
-    }
-
-    if (!fileInput.files[0]) {
-        alert("파일을 업로드하세요");
-        return;
-    }
-
-    // 3. FormData 생성
-    const formData = new FormData();
-    formData.append('file', fileInput.files[0]);
-    formData.append('fileData', JSON.stringify(data));
-
-    try {
-        const response = await fetch('https://todayaudio.writer1370.workers.dev/api/upload', {
-            method: 'POST',
-            headers: {'Authorization': `Bearer ${ADMIN_TOKEN}`},
-            body: formData
-        });
-        if(response.status === 200) {
-            alert("등록되었습니다! 🐝");
-           // [추가된 로직] 입력창 클리어
-           titleInput.value = "";       // 제목 비우기
-           descInput.value = "";        // 설명 비우기
-           fileInput.value = "";        // 파일 선택 해제 (실제 input)
-           fileNameSpan.textContent = "선택된 파일 없음"; // 화면에 표시되는 파일명 초기화
-            // 목록 재조회
-            getList();
-        }
-    } catch (error) {
-        alert("오류가 발생했습니다. 관리자에게 문의하세요.");
-    }
-}
