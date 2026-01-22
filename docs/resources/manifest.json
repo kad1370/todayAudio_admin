@@ -1,7 +1,7 @@
 {
   "name": "Today Audio",
   "short_name": "오오",
-  "start_url": "./index.html",
+  "start_url": "../index.html",
   "scope": "./",
   "display": "standalone",
   "background_color": "#ffffff",
