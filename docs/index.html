@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>오오</title>
+        <link rel="stylesheet" href="../resources/style.css" />
+        <link rel="manifest" href="../resources/manifest.json">
+    </head>
+    <body>
+        <div class="container">
+            <div class="header-container">
+                <div class="regist-header">
+                    <p class="section-title">오오</p>
+                </div>
+                <div class="list-header">
+                    <div id="searchContainer">
+                        <input id="searchInput" placeholder="검색하세요 ... ･ω･">
+                    </div>
+                </div>
+            </div>
+            <div class="loading-wrapper">
+                <div class="spinner"></div>
+                <div class="loading-text">오오를 가져오는 중 입니다...･ω･</div>
+            </div>
+            <div class="list-container">
+                <div class="list-wrapper">
+                    <div id="list"></div>
+                    <button class="floating-add-btn" onClick="loadRegistPage()">＋</button>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script>
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('../resources/js/service-worker.js');
+        }
+      </script>    
+    <script src="../resources/js/index.js"></script>    
+</html>
