@@ -1,0 +1,434 @@
+/* 1. 모든 요소 공통 및 폰트 설정 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+button, input, textarea, select {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: inherit;
+}
+
+body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: #fdfdf5;
+    padding: 40px 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    color: #000;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    line-height: 1.5;
+    word-break: keep-all;
+}
+
+/* 2. 헤더 및 네비게이션 
+.header-wrapper {
+    display: flex;
+    position: relative;
+    margin-bottom: 30px;
+    justify-content: center;
+    align-items: center;
+}
+*/
+.container {
+    width:90%
+}
+.header-container{
+    padding:18px;
+}
+/* 3. 헤더 레이아웃 수정 */
+.header-wrapper {
+    display: flex;
+    align-items: center;    /* 수직 중앙 정렬 */
+    justify-content: center; /* 제목(있을 경우) 중앙 정렬 */
+    position: relative;     /* 버튼 배치의 기준점 */
+    width: 100%;
+    min-height: 40px;       /* 버튼 높이에 맞춘 최소 높이 */
+    margin-bottom: 30px;
+}
+
+h1 { font-size: 1.8em; color: #000; text-align: center; margin: 0; }
+
+
+
+/* 3. 컨테이너 공통 스타일 */
+#registContainer, .list-container {
+    background: transparent; /* 배경색은 내부 wrapper나 필요 시 적용 */
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 4. 등록(Input) 영역 스타일 */
+.regist-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.regist-header .section-title {
+    font-weight: bold;
+    font-size: 1.1em;
+    border-left: 3px solid #ffd700;
+    padding-left: 10px;
+}
+
+#regist {
+    padding: 10px 24px;
+    background-color: #ffd700;
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.input-row { display: flex; flex-direction: column; gap: 15px; }
+.field-group { display: flex; align-items: center; gap: 12px; width: 100%; }
+.field-label { width: 45px; font-size: 14px; font-weight: bold; flex-shrink: 0; }
+
+input[type="text"] {
+    flex: 1; padding: 9px; border: 1px solid #eee8aa;
+    border-radius: 8px; outline: none; font-size: 14px; background: #fff;
+}
+
+.file-upload-wrapper {
+    display: flex; flex: 1; align-items: center;
+    background-color: #fff; padding: 9px;
+    border-radius: 8px; border: 1px solid #eee8aa;
+}
+
+.file-select-btn {
+    padding: 9px 15px; background-color: #fff9c4;
+    border: 1px solid #eee8aa; border-radius: 6px;
+    font-size: 13px; font-weight: bold; cursor: pointer; margin-right: 0px;
+}
+
+.file-name {
+    font-size: 13px; font-weight: bold; 
+}
+
+/* 5. 목록(List) 헤더 및 검색바 (Sticky) */
+.list-header { 
+    position: sticky;
+    top: -24px;
+    background: #fdfdf5; /* 바디 배경과 동일하게 하여 겹침 방지 */
+    z-index: 100;
+    padding-bottom: 0px; 
+    margin-bottom: 0px;
+}
+
+#searchContainer { display: flex; gap: 8px; }
+#searchContainer input { 
+    flex: 1; padding: 12px 15px; border: 1px solid #eee8aa; 
+    border-radius: 8px; outline: none; background: #fff;
+}
+
+/* 6. 목록 스크롤 및 플로팅 버튼 */
+.list-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+#list { 
+    max-height: 70vh; 
+    overflow-y: auto; 
+    padding-right: 8px;
+}
+
+#list::-webkit-scrollbar { width: 6px; }
+#list::-webkit-scrollbar-thumb { 
+    background: rgba(255, 215, 0, 0.4);
+    border-radius: 10px;
+    background-clip: padding-box; 
+    border-top: 10px solid transparent; 
+    border-bottom: 40px solid transparent;
+}
+
+.floating-add-btn {
+    position: absolute;
+    right: 15px;
+    bottom: 15px;
+    width: 50px;
+    height: 50px;
+    background-color: #ffd700;
+    border: none;
+    border-radius: 50%;
+    color: #000;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 101;
+    transition: transform 0.2s;
+}
+
+/* 7. 오디오 카드 (목록 깨짐 방지 - 핵심 수정본) */
+.audio-card { 
+    padding: 20px 12px; 
+    border-bottom: 1px solid #fff9c4; 
+    cursor: pointer; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 6px;
+    width: 100%;
+}
+
+/* detail.html 내의 audio-card 간격 조정 */
+.detail-wrapper .audio-card {
+    border-bottom: none;
+    padding: 10px 0 20px 0;
+}
+
+.title { 
+    font-weight: 700; 
+    color: #000; 
+    font-size: 13px; 
+    display: block; /* 깨짐 방지 */
+    width: 100%;
+    word-break: break-all;
+    white-space: normal;
+}
+
+.audio-card .desc { 
+    color: #777; 
+    font-size: 13px; 
+    display: block; /* 깨짐 방지 */
+    width: 100%;
+    word-break: break-all;
+    white-space: normal;
+}
+
+.audio-card .date { font-size: 11px; color: #999; margin-top: 2px; }
+
+/* 8. 상세 페이지 플레이어 및 컨트롤 */
+.player-container {
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 20px;
+    border: 0px solid #eee8aa;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.1);
+}
+
+audio {
+    width: 100%;
+    height: 40px;
+    filter: sepia(20%) saturate(70%) hue-rotate(10deg);
+    margin-bottom: 15px;
+}
+
+.control-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* 공통 캡슐형 버튼 */
+.add-btn, .skip-btn, .download-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background-color: rgba(255, 215, 0, 0.1);
+    border: 1px solid #eee8aa;
+    border-radius: 20px;
+    color: #000;
+    font-weight: 700;
+    padding: 8px 14px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.add-btn:hover, .skip-btn:hover {
+    background-color: #ffd700;
+    transform: translateY(-1px);
+}
+
+/* 9. 북마크 영역 */
+.bookmark-container {
+    margin-top: 25px;
+    padding: 0px 15px;
+    background: #fdfdf5;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.bookmark-title {
+    margin-bottom:25px;
+}
+
+.bookmark-row { display: flex; align-items: center; gap: 10px; width: 100%; margin-bottom:10px;}
+
+.time-tag {
+    background: #ffffff;
+    border: 1px solid #eee8aa;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #000;
+    cursor: pointer;
+    min-width: 70px;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.time-tag:active {
+    box-shadow: inset 2px 2px 5px rgba(0,0,0,0.1);
+    transform: scale(0.96);
+}
+
+.memo-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #eee8aa;
+    padding: 5px 8px;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.memo-input:focus { border-bottom-color: #ffd700; }
+
+/* 10. 로딩 애니메이션 */
+.loading-wrapper {
+    display: none; /* 기본은 숨김 */
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 0;
+}
+/* 보여줘야 할 때만 이 클래스를 추가 */
+.loading-wrapper.active {
+    display: flex;
+}
+.hide{
+    display:none;
+}
+
+.spinner {
+    width: 40px; height: 40px;
+    border: 4px solid rgba(255, 215, 0, 0.2);
+    border-top: 4px solid #ffd700;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
+.loading-text { font-size: 13px; color: #777; padding-top:20px; animation: pulse 1.5s infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+/* 전체 화면 덮개 */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, 0.7); /* 하얀색, 70% 불투명 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* 다른 모든 요소보다 위에 표시 */
+    
+    /* 기본적으로는 숨겨둠 */
+    
+}
+
+/* 보여줄 때 사용할 클래스 */
+.loading-overlay.active {
+    display: flex;
+}
+/* 기존 스피너 스타일 유지 (혹은 추가) */
+.loading-overlay .spinner {
+    width: 40px; height: 40px;
+    border: 4px solid rgba(255, 215, 0, 0.2);
+    border-top: 4px solid #ffd700;
+    border-radius: 50%;
+    animation: spin2 1s linear infinite;
+}
+
+@keyframes spin2 {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-overlay .loading-text {
+    margin-top: 15px;
+    font-weight: bold;
+    color: #333;
+}
+
+.loading-overlay .loading-wrapper {
+    display: flex; /* 기본은 숨김 */
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 0;
+    padding-bottom: 60vh;
+}
+
+
+/* 📱 반응형 최적화 */
+@media (max-width: 600px) {
+    body { padding: 20px 10px; }
+    #registContainer, .list-container{ padding: 18px; }
+    .regist-header { flex-direction: column; gap: 10px; }
+    #regist { width: 100%; height: 45px; }
+}
+
+/* 뒤로가기 버튼 위치 고정 */
+.back-btn {
+    position: absolute;     /* 부모(header-wrapper) 기준 절대 위치 */
+    left: 0;                /* 왼쪽 끝에 밀착 */
+    top: 50%;               /* 부모 높이의 절반 위치 */
+    transform: translateY(-50%); /* 버튼 자체 높이만큼 보정하여 정중앙 배치 */
+    
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 215, 0, 0.1);
+    border: 1px solid #eee8aa;
+    border-radius: 20px;
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 10;
+}
+
+.back-btn:hover {
+    background-color: #ffd700;
+    border-color: #ffc400;
+    transform: translateY(-50%) scale(1.05); /* 호버 시에도 중앙 유지하며 확대 */
+}
+
+/* SVG 아이콘 간격 (필요시) */
+.back-btn svg {
+    display: block;
+}
+
+/*
+.back-btn {
+    position: absolute;
+    left: 0;
+    z-index: 10;
+}
+*/

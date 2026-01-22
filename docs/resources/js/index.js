@@ -15,7 +15,11 @@ const ADMIN_TOKEN = 'ba10cc7b9ba5b27317d546824a01203d89c0ea3e0972fab50cb786ab5a7
 ------------------------------------*/
 async function getList(){
     let response;
+    
     try{
+        document.querySelector('.loading-wrapper').classList.add("active");
+        document.querySelector('.list-container').classList.add("hide");
+
         response = await fetch('https://todayaudio.writer1370.workers.dev/api/list', {
             method: 'GET',
             headers: {
@@ -40,6 +44,9 @@ async function getList(){
         if (navigator.onLine == false){
             alert("네트워크 연결을 확인해주세요!");
         } 
+    } finally {
+        document.querySelector('.loading-wrapper').classList.remove("active");
+        document.querySelector('.list-container').classList.remove("hide");
     }
 
 }
@@ -83,40 +90,9 @@ function loadDetailPage($this,id){
     if(window.localStorage.getItem(id) === null) {
         window.localStorage.setItem(id,JSON.stringify(obj));
     }
-    window.location.href = "detail.html?id="+id; 
+    window.location.href = "../page/detail.html?id="+id; 
 }
 
 function loadRegistPage(){
-    window.location.href = "regist.html"; 
+    window.location.href = "../page/regist.html"; 
 }
-/*
-async function loadAndPlayAudio($this, id) {
-    try {
-        const cache = await caches.open('audio-cache');
-        const cachedResponse = await cache.match(id);
-        if (!cachedResponse) {
-            const BASE_URL = 'https://todayaudio.writer1370.workers.dev/api/file';
-            const response = await fetch(`${BASE_URL}?id=${id}`);
-            if (!response.ok) {
-                throw new Error(`파일을 가져오는데 실패했습니다 : ${response.status}`);
-            }
-            let obj = {
-                title : $this.children[0].textContent,
-                desc : $this.children[1].textContent
-            }
-
-            if(window.localStorage.getItem(id) === null) {
-                window.localStorage.setItem(id,JSON.stringify(obj));
-            }
-            await cache.put(id, response.clone());
-
-        }
-    } catch (err) {
-        console.error(err);
-        alert("오류가 발생했습니다.");
-        return;
-    }
-
-    //window.location.href = "detail.html?id="+id;
-}
-*/

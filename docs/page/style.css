@@ -32,6 +32,9 @@ body {
     align-items: center;
 }
 */
+.container {
+    width:90%
+}
 /* 3. 헤더 레이아웃 수정 */
 .header-wrapper {
     display: flex;
@@ -48,7 +51,7 @@ h1 { font-size: 1.8em; color: #000; text-align: center; margin: 0; }
 
 
 /* 3. 컨테이너 공통 스타일 */
-#registContainer, #listContainer {
+#registContainer, .list-container {
     background: transparent; /* 배경색은 내부 wrapper나 필요 시 적용 */
     border-radius: 12px;
     padding: 24px;
@@ -88,24 +91,24 @@ h1 { font-size: 1.8em; color: #000; text-align: center; margin: 0; }
 .field-label { width: 45px; font-size: 14px; font-weight: bold; flex-shrink: 0; }
 
 input[type="text"] {
-    flex: 1; padding: 12px; border: 1px solid #eee8aa;
+    flex: 1; padding: 9px; border: 1px solid #eee8aa;
     border-radius: 8px; outline: none; font-size: 14px; background: #fff;
 }
 
 .file-upload-wrapper {
     display: flex; flex: 1; align-items: center;
-    background-color: #fff; padding: 5px;
+    background-color: #fff; padding: 9px;
     border-radius: 8px; border: 1px solid #eee8aa;
 }
 
 .file-select-btn {
-    padding: 8px 15px; background-color: #fff9c4;
+    padding: 9px 15px; background-color: #fff9c4;
     border: 1px solid #eee8aa; border-radius: 6px;
-    font-size: 12px; font-weight: bold; cursor: pointer; margin-right: 10px;
+    font-size: 13px; font-weight: bold; cursor: pointer; margin-right: 0px;
 }
 
 .file-name {
-    font-size: 12px; font-weight: bold; 
+    font-size: 13px; font-weight: bold; 
 }
 
 /* 5. 목록(List) 헤더 및 검색바 (Sticky) */
@@ -131,7 +134,7 @@ input[type="text"] {
 }
 
 #list { 
-    max-height: 550px; 
+    max-height: 70vh; 
     overflow-y: auto; 
     padding-right: 8px;
 }
@@ -301,13 +304,19 @@ audio {
 
 /* 10. 로딩 애니메이션 */
 .loading-wrapper {
+    display: none; /* 기본은 숨김 */
     width: 100%;
-    text-align: center;
-    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 30px 0;
+}
+/* 보여줘야 할 때만 이 클래스를 추가 */
+.loading-wrapper.active {
+    display: flex;
+}
+.hide{
+    display:none;
 }
 
 .spinner {
@@ -323,10 +332,62 @@ audio {
 .loading-text { font-size: 13px; color: #777; padding-top:20px; animation: pulse 1.5s infinite; }
 @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
+/* 전체 화면 덮개 */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, 0.7); /* 하얀색, 70% 불투명 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* 다른 모든 요소보다 위에 표시 */
+    
+    /* 기본적으로는 숨겨둠 */
+    
+}
+
+/* 보여줄 때 사용할 클래스 */
+.loading-overlay.active {
+    display: flex;
+}
+/* 기존 스피너 스타일 유지 (혹은 추가) */
+.loading-overlay .spinner {
+    width: 40px; height: 40px;
+    border: 4px solid rgba(255, 215, 0, 0.2);
+    border-top: 4px solid #ffd700;
+    border-radius: 50%;
+    animation: spin2 1s linear infinite;
+}
+
+@keyframes spin2 {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-overlay .loading-text {
+    margin-top: 15px;
+    font-weight: bold;
+    color: #333;
+}
+
+.loading-overlay .loading-wrapper {
+    display: flex; /* 기본은 숨김 */
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 0;
+    padding-bottom: 60vh;
+}
+
+
 /* 📱 반응형 최적화 */
 @media (max-width: 600px) {
     body { padding: 20px 10px; }
-    #registContainer, #listContainer { padding: 18px; }
+    #registContainer, .list-container{ padding: 18px; }
     .regist-header { flex-direction: column; gap: 10px; }
     #regist { width: 100%; height: 45px; }
 }

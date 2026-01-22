@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>오오</title>
+        <link rel="stylesheet" href="../resources/style.css" />
+        <link rel="manifest" href="../resources/manifest.json">
+    </head>
+    <body>
+        <div class="header-wrapper" style="margin-left:10px;">
+            <button class="back-btn" onclick="history.back()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>       
+            </button>
+        </div>
+        <div id="registContainer">
+            <div class="input-row">
+                <div class="field-group">
+                    <label class="field-label">제목</label>
+                    <input type="text" name="title" id="title" placeholder="제목을 입력하세요">
+                </div>    
+                <div class="field-group">
+                    <label class="field-label">설명</label>
+                    <input type="text" name="desc" id="desc" placeholder="내용을 입력하세요">
+                </div>
+                <div class="field-group file">
+                    <label class="field-label">파일</label>
+                    <label for="fileInput" class="file-select-btn">파일 선택</label>
+                    <div class="file-upload-wrapper">
+                        <span class="file-name" id="fileName">선택된 파일 없음</span>
+                        <input type="file" id="fileInput" name="myFile" style="display: none;">
+                    </div>
+                </div>
+                <div class="loading-wrapper">
+                    <div class="spinner"></div>
+                    <div class="loading-text">오오를 가져오는 중 입니다...･ω･</div>
+                </div>
+                <button id="regist" onclick="regist()">등록하기</button>  
+            </div>
+        </div> 
+    </body>
+    <script src="../resources/js/regist.js"></script>
+</html>

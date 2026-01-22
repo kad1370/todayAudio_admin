@@ -9,12 +9,17 @@ const fileNameSpan = document.getElementById('fileName');
 (async () => {
     // 파일명 표시 스크립트
     document.getElementById('fileInput').addEventListener('change', function(e) {
-        const fileName = e.target.files[0] ? e.target.files[0].name : "선택된 파일 없음";
-        document.getElementById('fileName').textContent = fileName;
-
-        if(titleInput.value === "") {
-            titleInput.value = fileName.substring(0,fileName.length-4); // 확장자 제거
+        let fileName = "";
+        let titleText = "";
+        if(e.target.files[0]) {
+            fileName = e.target.files[0].name;
+            titleText = fileName.substring(0,fileName.length-4); // 확장자 제거
+        } else {
+            fileName = "선택된 파일 없음";
+            titleText = "";
         }
+        fileNameSpan.textContent = fileName;
+        titleInput.value = titleText; 
     });  
 })();
 
@@ -41,6 +46,9 @@ async function regist(){
     formData.append('fileData', JSON.stringify(data));
 
     try {
+        document.querySelector('.loading-wrapper').classList.add("active");
+        document.querySelector('.file').classList.add("hide");
+
         const response = await fetch('https://todayaudio.writer1370.workers.dev/api/upload', {
             method: 'POST',
             headers: {'Authorization': `Bearer ${ADMIN_TOKEN}`},
@@ -58,5 +66,8 @@ async function regist(){
         }
     } catch (error) {
         alert("오류가 발생했습니다. 관리자에게 문의하세요.");
+    } finally {
+        document.querySelector('.loading-wrapper').classList.remove("active");
+        document.querySelector('.file').classList.remove("hide");
     }
 }

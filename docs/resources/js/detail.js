@@ -23,9 +23,9 @@ async function loadAndPlayAudio(id) {
         const cache = await caches.open('audio-cache');
         const cachedResponse = await cache.match(id);
         if (!cachedResponse) {
-            document.querySelector('.loading-wrapper').style.display = 'block';
-            document.querySelector('.player-container').style.display = 'none';
-            document.querySelector('.bookmark-container').style.display = 'none';
+            document.querySelector('.loading-wrapper').classList.add("active");
+            document.querySelector('.player-container').classList.add("hide");
+            document.querySelector('.bookmark-container').classList.add("hide");
             
             const BASE_URL = 'https://todayaudio.writer1370.workers.dev/api/file';
             const response = await fetch(`${BASE_URL}?id=${id}`);
@@ -41,9 +41,9 @@ async function loadAndPlayAudio(id) {
         alert("오류가 발생했습니다.");
         return;
     } finally {
-        document.querySelector('.loading-wrapper').style.display = 'none';
-        document.querySelector('.player-container').style.display = 'block';
-        document.querySelector('.bookmark-container').style.display = 'block';
+        document.querySelector('.loading-wrapper').classList.remove("active");
+        document.querySelector('.player-container').classList.remove("hide");
+        document.querySelector('.bookmark-container').classList.remove("hide");
     }
 }  
 
