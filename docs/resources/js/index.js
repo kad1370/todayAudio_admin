@@ -90,9 +90,9 @@ function loadDetailPage($this,id){
     if(window.localStorage.getItem(id) === null) {
         window.localStorage.setItem(id,JSON.stringify(obj));
     }
-    window.location.href = "../page/detail.html?id="+id; 
+    window.location.href = "/page/detail.html?id="+id; 
 }
 
 function loadRegistPage(){
-    window.location.href = "../page/regist.html"; 
+    window.location.href = "/page/regist.html"; 
 }
