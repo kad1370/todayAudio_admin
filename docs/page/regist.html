@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>오오</title>
         <link rel="stylesheet" href="../resources/style.css" />
-        <link rel="manifest" href="../resources/manifest.json">
+        <!-- <link rel="manifest" href="../resources/manifest.json"> -->
     </head>
     <body>
         <div class="header-wrapper" style="margin-left:10px;">
@@ -15,14 +15,6 @@
         </div>
         <div id="registContainer">
             <div class="input-row">
-                <div class="field-group">
-                    <label class="field-label">제목</label>
-                    <input type="text" name="title" id="title" placeholder="제목을 입력하세요">
-                </div>    
-                <div class="field-group">
-                    <label class="field-label">설명</label>
-                    <input type="text" name="desc" id="desc" placeholder="내용을 입력하세요">
-                </div>
                 <div class="field-group file">
                     <label class="field-label">파일</label>
                     <label for="fileInput" class="file-select-btn">파일 선택</label>
@@ -31,9 +23,17 @@
                         <input type="file" id="fileInput" name="myFile" style="display: none;">
                     </div>
                 </div>
+                <div class="field-group">
+                    <label class="field-label">제목</label>
+                    <input type="text" name="title" id="title" placeholder="제목을 입력하세요">
+                </div>
+                <div class="field-group">
+                    <label class="field-label">설명</label>
+                    <input type="text" name="desc" id="desc" placeholder="내용을 입력하세요">
+                </div>
                 <div class="loading-wrapper">
                     <div class="spinner"></div>
-                    <div class="loading-text">오오를 가져오는 중 입니다...･ω･</div>
+                    <div class="loading-text">오오를 등록하는 중 입니다...･ω･</div>
                 </div>
                 <button id="regist" onclick="regist()">등록하기</button>  
             </div>

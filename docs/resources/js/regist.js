@@ -30,13 +30,12 @@ async function regist(){
     };
 
     // 2. 유효성 검사
-    if (!data.title || data.title.trim() === "") {
-        alert("제목을 입력하세요");
-        return;
-    }
-
     if (!fileInput.files[0]) {
         alert("파일을 업로드하세요");
+        return;
+    }
+    if (!data.title || data.title.trim() === "") {
+        alert("제목을 입력하세요");
         return;
     }
 

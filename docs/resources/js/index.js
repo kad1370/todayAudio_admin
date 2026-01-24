@@ -1,14 +1,35 @@
 const ADMIN_TOKEN = 'ba10cc7b9ba5b27317d546824a01203d89c0ea3e0972fab50cb786ab5a702dff';
 
 (async () => {
-    const cacheNames = await caches.keys(); // 존재하는 모든 캐시 이름 가져오기
-    await Promise.all(
-      cacheNames.map(name => caches.delete(name))
-    );
-
-    window.localStorage.clear();
+    resetCache();
     getList();
 })();
+
+/*------------------------------------
+    캐시 초기화
+------------------------------------*/
+async function resetCache(){
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = today.getDate();
+    const yyyymmdd = yyyy+mm+dd;
+
+    const lastSyncDate = window.localStorage.getItem("lastSyncDate");
+    if(lastSyncDate == "") {
+        window.localStorage.setItem("lastSyncDate",yyyymmdd);
+    } 
+
+    // 하루 지나면 캐시 초기화
+    if(lastSyncDate != yyyymmdd) {
+        const cacheNames = await caches.keys(); 
+        await Promise.all(
+          cacheNames.map(name => caches.delete(name))
+        );
+        window.localStorage.clear();
+        window.localStorage.setItem("lastSyncDate",yyyymmdd);
+    }
+}
 
 /*------------------------------------
     파일 목록 조회

@@ -108,12 +108,12 @@ function addTime(){
     };
 
     // 메모 입력창
-    const input = document.createElement('input');
-    input.className = 'memo-input';
-    input.placeholder = '여기에 메모를 입력하세요...';
+    const textarea = document.createElement('textarea');
+    textarea.className = 'memo-area';
+    textarea.placeholder = '여기에 메모를 입력하세요...';
     
     row.appendChild(btn);
-    row.appendChild(input);
+    row.appendChild(textarea);
     target.appendChild(row);
 }
 
