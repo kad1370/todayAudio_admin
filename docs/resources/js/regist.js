@@ -64,6 +64,7 @@ async function regist(){
             //getList();
         }
     } catch (error) {
+    alert(error);
         alert("오류가 발생했습니다. 관리자에게 문의하세요.");
     } finally {
         document.querySelector('.loading-wrapper').classList.remove("active");
